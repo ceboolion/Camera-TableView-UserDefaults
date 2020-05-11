@@ -30,5 +30,4 @@ class DeatailImageController: UIViewController {
     image.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
     image.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
   }
-  
 }

@@ -84,6 +84,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource, UIImagePic
     let path = getDocumentDirectory().appendingPathComponent(image.image)
     cell.newImage.image = UIImage(contentsOfFile: path.path)
     cell.newImage.layer.cornerRadius = 25
+    cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
 //    cell.name.text = "text"
     return cell
   }
@@ -99,7 +100,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource, UIImagePic
   
   func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
     guard let image = info[.editedImage] as? UIImage else {return}
-    let imageName = UUID().uuidString
+    var imageName = UUID().uuidString
     let imagePath = getDocumentDirectory().appendingPathComponent(imageName)
     if let jpegData = image.jpegData(compressionQuality: 0.8){
       try? jpegData.write(to: imagePath)
@@ -109,7 +110,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource, UIImagePic
     ac.addTextField()
     ac.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak self, weak ac] _ in
       guard let title = ac?.textFields?[0].text else {return}
-      imageData.imageName = title
+      imageName = title
       self?.imageTable.reloadData()
       self?.save()
     }))
@@ -123,7 +124,5 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource, UIImagePic
     let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
     return paths[0]
   }
-  
-  
 }
 
